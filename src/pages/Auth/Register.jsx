@@ -1,14 +1,17 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { FaEyeSlash, FaEye } from 'react-icons/fa';
 import { useState } from 'react';
 import { auth } from '../../config/firebase';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
+import ModalError from '../../components/ModalError';
 const Register = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const navigate = useNavigate();
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
@@ -23,10 +26,13 @@ const Register = () => {
     try {
       const user = await createUserWithEmailAndPassword(auth, email, password);
       setLoading(false);
-      console.log(user);
+      navigate('/');
     } catch (error) {
       setLoading(false);
-      console.log(error.message);
+      setError(error.code);
+      setTimeout(() => {
+        setError(null);
+      }, 2000);
     }
   };
   return (
@@ -38,7 +44,8 @@ const Register = () => {
             <h2 className="font-bold text-5xl">Rooverse</h2>
             <p className="">Join us, make your own planet and sharing your thoughts with others.</p>
           </div>
-          <div className="w-5/12 px-4 flex flex-col bg-slate-100">
+          <div className="w-5/12 px-4 flex flex-col bg-slate-100 relative">
+            {error && <ModalError errorTitle={'Error'} errorMessage={error} />}
             <h2 className="mt-5 mb-3 font-semibold">Register Here!</h2>
             <div className="w-full">
               <input type="email" placeholder="Enter your email" className="w-full bg-transparent outline-none mb-4 px-3 py-2 rounded-md ring-2 hover:ring-sky-500 focus:ring-sky-500" value={email} onChange={handleEmailChange} />
@@ -56,7 +63,7 @@ const Register = () => {
               </Link>
             </p>
             <button className="w-full py-2 bg-sky-500 font-semibold text-white rounded-lg mb-4" onClick={handleOnClick}>
-              {loading ? 'Processing...' : 'Register'}
+              {loading ? 'Processing...' : 'Sign Up'}
             </button>
           </div>
         </div>
