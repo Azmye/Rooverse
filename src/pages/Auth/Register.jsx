@@ -17,10 +17,9 @@ const Register = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (users) {
-      navigate('/');
-    }
-  }, []);
+    console.log(users);
+    users.user === null ? undefined : navigate('/');
+  }, [users]);
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);

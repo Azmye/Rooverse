@@ -1,7 +1,8 @@
 import { auth } from '../../config/firebase';
 import userState from '../../config/UserState';
 const Home = () => {
-  console.log(auth.currentUser);
+  const users = userState((state) => state.users);
+  console.log(users);
   return <div>Home</div>;
 };
 
