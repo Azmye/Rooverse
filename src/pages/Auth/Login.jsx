@@ -1,18 +1,26 @@
-import { signInWithEmailAndPassword } from 'firebase/auth';
-import { useState } from 'react';
+import { onAuthStateChanged, signInWithEmailAndPassword } from 'firebase/auth';
+import { useEffect, useState } from 'react';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import { Link, useNavigate } from 'react-router-dom';
 import ModalError from '../../components/ModalError';
 import { auth } from '../../config/firebase';
+import userState from '../../config/UserState';
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const users = userState((state) => state.users);
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (users) {
+      navigate('/');
+    }
+  }, []);
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
@@ -25,7 +33,7 @@ const Login = () => {
   const handleOnClick = async () => {
     setLoading(true);
     try {
-      const user = await signInWithEmailAndPassword(auth, email, password);
+      await signInWithEmailAndPassword(auth, email, password);
       setLoading(false);
       navigate('/');
     } catch (error) {

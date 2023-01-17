@@ -1,3 +1,13 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import { auth } from './firebase';
+
+let userStateStore = (set) => ({
+  users: {},
+  addUser: (user) => set((state) => ({ users: { ...state.users, user } })),
+});
+
+userStateStore = persist(userStateStore, { name: 'users' });
+
+const userState = create(userStateStore);
+
+export default userState;
