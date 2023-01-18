@@ -2,7 +2,7 @@ import NavBarButtons from './NavBarButtons';
 import NavBarMenu from './NavBarMenu';
 
 import { IoPlanet } from 'react-icons/io5';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 
 import { auth } from '../config/firebase';
 import userState from '../config/UserState';
@@ -12,6 +12,7 @@ import { useEffect } from 'react';
 const NavBar = () => {
   const users = userState((state) => state.users);
   const addUser = userState((state) => state.addUser);
+  const navigate = useNavigate();
 
   useEffect(() => {
     onAuthStateChanged(auth, (currentUser) => {
@@ -19,10 +20,11 @@ const NavBar = () => {
     });
   }, [auth]);
 
-  const handleOnClick = async () => {
+  const handleOnSignOut = async () => {
     await signOut(auth);
     console.log('log out');
   };
+
   return (
     <header className="">
       <div className="fixed right-0 left-0">
@@ -36,7 +38,7 @@ const NavBar = () => {
               <NavBarMenu
                 className={'fixed left-0 right-0 bottom-0 flex justify-evenly items-center text-xl font-semibold text-white bg-slate-900 py-4 lg:text-slate-900 lg:bg-transparent lg:py-0 lg:mx-auto lg:gap-3 lg:justify-between lg:static'}
               />
-              {auth.currentUser ? <NavBarUser onClick={handleOnClick} className={'gap-2 hidden lg:flex items-center'} /> : <NavBarButtons className={'gap-2 hidden lg:flex'} />}
+              {auth.currentUser ? <NavBarUser signOut={handleOnSignOut} className={'gap-1 hidden lg:flex items-center'} /> : <NavBarButtons className={'gap-2 hidden lg:flex'} />}
             </nav>
           </div>
         </div>
