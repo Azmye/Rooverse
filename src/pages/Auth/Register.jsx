@@ -44,15 +44,15 @@ const Register = () => {
     }
   };
   return (
-    <div className="container mx-auto px-44 py-72">
-      <div className="w-8/12 m-auto rounded-lg overflow-hidden">
-        <div className="flex">
-          <div className="w-7/12 bg-gradient-to-l from-slate-700 via-slate-800 to-slate-900 text-white p-5">
+    <div className="container mx-auto px-4 py-44 lg:px-44 lg:py-72">
+      <div className="w-full lg:w-8/12 m-auto rounded-lg overflow-hidden shadow-xl">
+        <div className="flex flex-col lg:flex-row">
+          <div className="w-full lg:w-7/12 bg-gradient-to-l from-slate-700 via-slate-800 to-slate-900 text-white p-5">
             <h1 className="font-bold text-3xl">Welcome to,</h1>
             <h2 className="font-bold text-5xl">Rooverse</h2>
             <p className="">Join us, make your own planet and sharing your thoughts with others.</p>
           </div>
-          <div className="w-5/12 px-4 flex flex-col bg-slate-100 relative">
+          <div className="w-full lg:w-5/12 px-4 flex flex-col bg-slate-100 relative">
             {error && <ModalError errorTitle={'Error'} errorMessage={error} />}
             <h2 className="mt-5 mb-3 font-semibold">Register Here!</h2>
             <div className="w-full">

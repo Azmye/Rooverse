@@ -33,7 +33,7 @@ const NavBar = () => {
             <NavLink to={'/'} className="font-bold text-xl flex items-center text-slate-900">
               <IoPlanet className="mr-1" /> Roo<span className="text-slate-700">verse</span>
             </NavLink>
-            <NavBarButtons className={`ml-auto flex gap-3 lg:hidden`} />
+            {auth.currentUser ? <NavBarUser signOut={handleOnSignOut} className={'ml-auto gap-1 flex items-center'} /> : <NavBarButtons className={`ml-auto flex gap-3 lg:hidden`} />}
             <nav className="lg:w-full lg:ml-auto lg:flex">
               <NavBarMenu
                 className={'fixed left-0 right-0 bottom-0 flex justify-evenly items-center text-xl font-semibold text-white bg-slate-900 py-4 lg:text-slate-900 lg:bg-transparent lg:py-0 lg:mx-auto lg:gap-3 lg:justify-between lg:static'}
